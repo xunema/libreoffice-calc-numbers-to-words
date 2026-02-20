@@ -1,0 +1,15 @@
+# Build artifacts
+*.oxt
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Temporary files
+*~
+*.tmp
+
+# IDE files
+.vscode/
+.idea/
