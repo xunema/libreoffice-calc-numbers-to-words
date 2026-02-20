@@ -6,6 +6,7 @@ Welcome to the documentation wiki for the LibreOffice Calc Number to Words add-i
 
 ### User Documentation
 - [Home](../README.md) - Main README with installation and usage instructions
+- [Examples](examples.md) - Comprehensive usage examples
 - [Quick Start Guide](#) - Getting started with the add-in
 - [Function Reference](#) - Detailed function documentation
 

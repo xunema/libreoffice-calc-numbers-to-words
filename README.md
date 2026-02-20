@@ -93,6 +93,7 @@ libreoffice-calc-numbers-to-words/
 ├── test_conversion.py    # Test script for conversion logic
 └── docs/                 # Architecture and documentation
     ├── architecture.md   # Technical architecture
+    ├── examples.md      # Comprehensive usage examples
     └── wiki-home.md     # Wiki home page
 ```
 
