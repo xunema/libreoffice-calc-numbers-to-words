@@ -15,7 +15,9 @@ A LibreOffice Calc add-in that provides a `NUMTOWORDS()` function to convert num
 
 ### Installation (Pre-built Extension)
 
-1. **Download** the latest `.oxt` file from the [Releases](https://github.com/xunema/libreoffice-calc-numbers-to-words/releases) page.
+1. **Download** the latest `.oxt` file:
+   - **Direct download**: [numtowords.oxt v1.0.0](https://github.com/xunema/libreoffice-calc-numbers-to-words/releases/download/v1.0.0/numtowords.oxt)
+   - **Releases page**: [All releases](https://github.com/xunema/libreoffice-calc-numbers-to-words/releases)
 
 2. **Open LibreOffice Calc** and go to `Tools` → `Extension Manager`.
 
