@@ -90,6 +90,7 @@ libreoffice-calc-numbers-to-words/
 ├── build.sh              # Build script
 ├── LICENSE               # GNU GPL v3.0 license
 ├── README.md            # This documentation
+├── test_conversion.py    # Test script for conversion logic
 └── docs/                 # Architecture and documentation
     ├── architecture.md   # Technical architecture
     └── wiki-home.md     # Wiki home page
@@ -112,6 +113,16 @@ This creates `numtowords.oxt` which contains:
 ### Technical Details
 
 The add-in implements the LibreOffice UNO API with Python. For detailed architecture and implementation details, see the [Architecture Documentation](docs/architecture.md).
+
+### Testing
+
+A test script is included to verify the number conversion logic works correctly:
+
+```bash
+python3 test_conversion.py
+```
+
+This runs a comprehensive set of tests for cardinal and ordinal number conversion without requiring LibreOffice to be installed.
 
 ## Troubleshooting
 
