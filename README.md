@@ -17,7 +17,7 @@ A LibreOffice Calc add-in that converts numbers to their English word representa
 
 ### Option A — Extension Manager (GUI)
 
-1. Download [`python/NumToWordsPy.oxt`](python/NumToWordsPy.oxt) from this repository
+1. Download **[NumToWordsPy.oxt](https://github.com/xunema/libreoffice-calc-numbers-to-words/releases/download/v2.0.0/NumToWordsPy.oxt)** (latest release: v2.0.0)
 2. Open LibreOffice Calc
 3. Go to **Tools → Extension Manager**
 4. Click **Add** and select `NumToWordsPy.oxt`
@@ -26,7 +26,10 @@ A LibreOffice Calc add-in that converts numbers to their English word representa
 ### Option B — Command Line
 
 ```bash
-# Make sure LibreOffice is closed first
+# Download
+curl -LO https://github.com/xunema/libreoffice-calc-numbers-to-words/releases/download/v2.0.0/NumToWordsPy.oxt
+
+# Make sure LibreOffice is closed first, then install
 unopkg add NumToWordsPy.oxt
 
 # Verify it installed
