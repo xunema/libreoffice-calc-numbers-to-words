@@ -1,163 +1,128 @@
-# LibreOffice Calc Number to Words Converter
+# LibreOffice Calc NumToWords Extension
 
-A LibreOffice Calc add-in that provides a `NUMTOWORDS()` function to convert numbers to their word representation.
+A LibreOffice Calc add-in that converts numbers to their English word representation using a custom `=NUMTOWORDS()` spreadsheet function.
 
 ## Features
 
-- **Cardinal Numbers**: Convert numbers to English words (e.g., 123 → "one hundred twenty-three")
-- **Ordinal Numbers**: Convert to ordinal form (e.g., 3 → "third", 21 → "twenty-first")
-- **Currency Format**: Format as dollars and cents (e.g., 123.45 → "one hundred twenty-three dollars and forty-five cents")
-- **Large Numbers**: Handle numbers up to trillions
-- **Decimal Support**: Convert decimal numbers (e.g., 12.34 → "twelve point three four")
-- **Negative Numbers**: Support for negative values (e.g., -5 → "minus five")
+- **Cardinal numbers** — `123` → `one hundred and twenty-three`
+- **Ordinal numbers** — `42` → `forty-second`
+- **Currency format** — `99.99` → `ninety-nine dollars and ninety-nine cents`
+- **Negative numbers** — `-5` → `minus five`
+- **Decimals** — `12.34` → `twelve point three four`
+- **Large numbers** — up to trillions
 
-## Quick Start
+---
 
-### Installation (Pre-built Extension)
+## Installation
 
-1. **Download** the latest `.oxt` file:
-   - **Direct download**: [numtowords.oxt v1.0.0](https://github.com/xunema/libreoffice-calc-numbers-to-words/releases/download/v1.0.0/numtowords.oxt)
-   - **Releases page**: [All releases](https://github.com/xunema/libreoffice-calc-numbers-to-words/releases)
+### Option A — Extension Manager (GUI)
 
-2. **Open LibreOffice Calc** and go to `Tools` → `Extension Manager`.
+1. Download [`python/NumToWordsPy.oxt`](python/NumToWordsPy.oxt) from this repository
+2. Open LibreOffice Calc
+3. Go to **Tools → Extension Manager**
+4. Click **Add** and select `NumToWordsPy.oxt`
+5. Restart LibreOffice Calc
 
-3. **Click "Add"** and select the downloaded `numtowords.oxt` file.
-
-4. **Restart LibreOffice** to activate the extension.
-
-### Installation (Build from Source)
-
-If you want to build the extension yourself:
+### Option B — Command Line
 
 ```bash
-# Clone the repository
-git clone https://github.com/xunema/libreoffice-calc-numbers-to-words.git
-cd libreoffice-calc-numbers-to-words
+# Make sure LibreOffice is closed first
+unopkg add NumToWordsPy.oxt
 
-# Build the extension
-./build.sh
-
-# The extension file numtowords.oxt will be created
+# Verify it installed
+unopkg list
 ```
 
-Then follow the installation steps above using your built `.oxt` file.
+Then open LibreOffice Calc and start using `=NUMTOWORDS()`.
 
-## Usage Examples
+---
 
-### Basic Usage
-
-| Formula | Result |
-|---------|--------|
-| `=NUMTOWORDS(123)` | "one hundred and twenty-three" |
-| `=NUMTOWORDS(4567)` | "four thousand five hundred and sixty-seven" |
-| `=NUMTOWORDS(1000000)` | "one million" |
-| `=NUMTOWORDS(-42)` | "minus forty-two" |
-
-### Format Options
-
-| Formula | Result |
-|---------|--------|
-| `=NUMTOWORDS(123, 0)` | "one hundred and twenty-three" (cardinal, default) |
-| `=NUMTOWORDS(123, 1)` | "one hundred and twenty-third" (ordinal) |
-| `=NUMTOWORDS(123.45, 2)` | "one hundred and twenty-three dollars and forty-five cents" (currency) |
-
-### Advanced Examples
-
-| Formula | Result |
-|---------|--------|
-| `=NUMTOWORDS(21, 1)` | "twenty-first" |
-| `=NUMTOWORDS(1002)` | "one thousand two" |
-| `=NUMTOWORDS(15.50, 2)` | "fifteen dollars and fifty cents" |
-| `=NUMTOWORDS(0.99)` | "zero point nine nine" |
-| `=NUMTOWORDS(123456789)` | "one hundred twenty-three million four hundred fifty-six thousand seven hundred eighty-nine" |
-
-### Using with Cell References
-
-You can also use the function with cell references:
+## Usage
 
 ```
-A1: 123.45
-B1: =NUMTOWORDS(A1, 2)  → "one hundred twenty-three dollars and forty-five cents"
+=NUMTOWORDS(number)
+=NUMTOWORDS(number, formatStyle)
 ```
 
-## Development
+| formatStyle | Mode | Example |
+|-------------|------|---------|
+| `0` (default) | Cardinal | `=NUMTOWORDS(123)` → `one hundred and twenty-three` |
+| `1` | Ordinal | `=NUMTOWORDS(42, 1)` → `forty-second` |
+| `2` | Currency (USD) | `=NUMTOWORDS(99.99, 2)` → `ninety-nine dollars and ninety-nine cents` |
 
-### Project Structure
+### More Examples
+
+```
+=NUMTOWORDS(0)            →  zero
+=NUMTOWORDS(-5)           →  minus five
+=NUMTOWORDS(1000000)      →  one million
+=NUMTOWORDS(1001, 1)      →  one thousand first
+=NUMTOWORDS(1, 2)         →  one dollar
+=NUMTOWORDS(12.34)        →  twelve point three four
+```
+
+---
+
+## Project Structure
 
 ```
 libreoffice-calc-numbers-to-words/
-├── numtowords.py          # Main Python implementation
-├── description.xml        # Extension metadata
-├── META-INF/manifest.xml  # Package manifest for LibreOffice
-├── build.sh              # Build script
-├── LICENSE               # GNU GPL v3.0 license
-├── README.md            # This documentation
-├── test_conversion.py    # Test script for conversion logic
-└── docs/                 # Architecture and documentation
-    ├── architecture.md   # Technical architecture
-    ├── examples.md      # Comprehensive usage examples
-    └── wiki-home.md     # Wiki home page
+├── python/                        # ← Working extension (Python UNO)
+│   ├── NumToWordsPy.oxt           #   Ready-to-install extension package
+│   ├── numtowords.uno.py          #   Python UNO component
+│   ├── CalcAddIns.xcu             #   Calc function registration
+│   ├── NumToWords.rdb             #   Compiled UNO type library
+│   ├── description.xml            #   Extension metadata
+│   └── META-INF/manifest.xml      #   OXT manifest
+├── idl/
+│   └── com/numbertext/converter/
+│       └── NumToWords.idl         #   UNO interface definition (IDL source)
+├── java/                          #   Java attempt (abandoned — see wiki)
+└── README.md
 ```
 
-### Building the Extension
+---
 
-The `build.sh` script creates the `.oxt` package:
+## Reinstalling / Upgrading
+
+If you are updating from a previous version, do a clean reinstall:
 
 ```bash
-./build.sh
+# Close LibreOffice first, then:
+unopkg remove com.numbertext.numtowords-python
+rm -rf ~/.config/libreoffice/4/user/uno_packages/cache/
+rm -rf ~/.config/libreoffice/4/user/extensions/
+
+unopkg add NumToWordsPy.oxt
 ```
 
-This creates `numtowords.oxt` which contains:
-- `numtowords.py` - Python implementation
-- `description.xml` - Extension metadata
-- `license.txt` - License information
-- `META-INF/manifest.xml` - LibreOffice package manifest
+---
 
-### Technical Details
+## Technical Details
 
-The add-in implements the LibreOffice UNO API with Python. For detailed architecture and implementation details, see the [Architecture Documentation](docs/architecture.md).
+- **Language:** Python 3 (UNO bridge)
+- **Pattern:** Implements a custom IDL interface (`NumToWordsConverter`) so LibreOffice's UNO introspection can discover and dispatch calls to `numToWords()` — the same technique used by [libnumbertext](https://github.com/Numbertext/libnumbertext)
+- **No dependencies:** Pure Python standard library, no third-party packages required
+- **Tested on:** LibreOffice 24.2 on Linux
 
-### Testing
+---
 
-A test script is included to verify the number conversion logic works correctly:
+## Wiki
 
-```bash
-python3 test_conversion.py
-```
+For detailed documentation see the [GitHub Wiki](../../wiki):
 
-This runs a comprehensive set of tests for cardinal and ordinal number conversion without requiring LibreOffice to be installed.
+- [How to Create a Custom LibreOffice Calc Function](../../wiki/How-to-Create-a-Custom-LibreOffice-Calc-Function) — step-by-step guide anyone can follow to build their own Calc add-in
+- [Development Challenges and Debugging Log](../../wiki/Development-Challenges-and-Debugging-Log) — all the things that went wrong and how they were fixed
 
-## Troubleshooting
-
-### Extension Not Appearing
-- Make sure you restarted LibreOffice after installation
-- Check the Extension Manager to verify the add-in is listed
-- Try reinstalling the extension
-
-### Function Not Working
-- Ensure you're using LibreOffice Calc (not Writer or other components)
-- Check for syntax errors in your formula
-- Verify the extension is enabled in Extension Manager
-
-### Building Issues
-- Ensure you have `zip` installed on your system
-- Make sure all required files are present in the directory
+---
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0. See the [LICENSE](LICENSE) file for details.
+GNU General Public License v3.0
 
-## Contributing
+---
 
-Contributions are welcome! Please:
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
+## Version History
 
-For bug reports or feature requests, please open an issue on GitHub.
-
-## Support
-
-- **GitHub Issues**: [Report issues or request features](https://github.com/xunema/libreoffice-calc-numbers-to-words/issues)
-- **Documentation**: [Architecture and development documentation](docs/architecture.md)
+- **v2.0.0** — Rewritten as Python UNO extension. Working. Java approach abandoned due to LO 24.2 Java bridge instability.
+- **v1.0.0** — Original Python prototype
