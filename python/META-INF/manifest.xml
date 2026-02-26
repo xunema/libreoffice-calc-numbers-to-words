@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest:manifest xmlns:manifest="http://openoffice.org/2001/manifest">
+
+  <!-- Type library — defines the numToWords interface so LO can dispatch it -->
+  <manifest:file-entry
+      manifest:media-type="application/vnd.sun.star.uno-typelibrary;type=RDB"
+      manifest:full-path="NumToWords.rdb"/>
+
+  <!-- Python UNO component — same pattern as libnumbertext -->
+  <manifest:file-entry
+      manifest:media-type="application/vnd.sun.star.uno-component;type=Python"
+      manifest:full-path="numtowords.uno.py"/>
+
+  <!-- Calc AddIn function registration -->
+  <manifest:file-entry
+      manifest:media-type="application/vnd.sun.star.configuration-data"
+      manifest:full-path="CalcAddIns.xcu"/>
+
+  <!-- Extension description -->
+  <manifest:file-entry
+      manifest:media-type="application/vnd.sun.star.package-bundle-description"
+      manifest:full-path="description.xml"/>
+
+</manifest:manifest>

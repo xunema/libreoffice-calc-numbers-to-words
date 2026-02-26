@@ -1,0 +1,8 @@
+module com { module numbertext { module converter {
+
+    interface NumToWordsConverter
+    {
+      string numToWords( [in] double number, [in] any formatStyle );
+    };
+
+}; }; };
